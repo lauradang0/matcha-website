@@ -229,3 +229,62 @@ body {
   color: #ffffff;
   letter-spacing: 0.04em;
 }
+
+
+/* ════════════════════════════════════════
+   SECTION 3 — MAP (same cottagecore band)
+════════════════════════════════════════ */
+.map {
+  width: 100%;
+  background-color: #F4ECD8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 24px 100px;
+
+  background-image:
+    radial-gradient(ellipse 340px 220px at 8% 12%, rgba(180,160,110,0.13) 0%, transparent 70%),
+    radial-gradient(ellipse 260px 180px at 92% 80%, rgba(180,160,110,0.10) 0%, transparent 70%);
+}
+
+.map-headings {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.map-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: #A08C6E;
+  letter-spacing: 0.04em;
+}
+
+.map-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 60px);
+  color: #5C4A32;
+  letter-spacing: 0.01em;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.map-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 17px;
+  color: #A08C6E;
+}
+
+#map {
+  max-width: 1100px;
+  width: 100%;
+  height: 600px;
+  margin: 36px auto 0;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(92, 74, 50, 0.15);
+  border: 2px solid #A08C6E;
+}
