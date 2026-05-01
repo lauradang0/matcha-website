@@ -1,0 +1,231 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 100%;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* ════════════════════════════════════════
+   SECTION 1 — SPLASH
+════════════════════════════════════════ */
+.splash {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.bg-photo {
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/matcha-chasen.jpg');
+  background-size: cover;
+  background-position: center top;
+  z-index: 0;
+}
+
+.bg-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+/* Bubbles */
+.bubbles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(20, 60, 5, 0.25);
+}
+
+/* Main text */
+.content {
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.title-row {
+  display: flex;
+  align-items: baseline;
+  gap: 28px;
+}
+
+.title-laura {
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: clamp(72px, 9vw, 130px);
+  color: #ffffff;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.title-jp {
+  font-family: 'BIZ UDGothic', sans-serif;
+  font-weight: 700;
+  font-size: clamp(60px, 7.6vw, 110px);
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1;
+}
+
+.subtitle-row {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+
+.subtitle-row span {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.subtitle-jp {
+  font-family: 'BIZ UDGothic', sans-serif !important;
+  letter-spacing: 0 !important;
+}
+
+/* Scroll hint */
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+  animation: bob 2s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+
+/* ════════════════════════════════════════
+   SECTION 2 — COLLECTION (cottagecore)
+════════════════════════════════════════ */
+.collection {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #F4ECD8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px 100px;
+  gap: 12px;
+
+  /* subtle leaf-shadow texture via radial gradients */
+  background-image:
+    radial-gradient(ellipse 340px 220px at 8% 12%, rgba(180,160,110,0.13) 0%, transparent 70%),
+    radial-gradient(ellipse 260px 180px at 92% 80%, rgba(180,160,110,0.10) 0%, transparent 70%);
+}
+
+.collection-eyebrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: #A08C6E;
+  letter-spacing: 0.04em;
+}
+
+.collection-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 60px);
+  color: #5C4A32;
+  letter-spacing: 0.01em;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.collection-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 17px;
+  color: #A08C6E;
+  margin-bottom: 36px;
+}
+
+/* Shelf image link */
+.shelf-link {
+  position: relative;
+  display: block;
+  cursor: pointer;
+  text-decoration: none;
+  max-width: 520px;
+  width: 100%;
+  transition: transform 0.35s ease;
+}
+
+.shelf-link:hover {
+  transform: translateY(-6px);
+}
+
+.shelf-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+/* CTA overlay that appears on hover */
+.shelf-cta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 24px 22px;
+  background: linear-gradient(to top, rgba(90,65,35,0.55) 0%, transparent 100%);
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.shelf-link:hover .shelf-cta {
+  opacity: 1;
+}
+
+.shelf-cta span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-style: italic;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
