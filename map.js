@@ -105,8 +105,18 @@
       return [p.lat, p.lng];
     });
 
+    const markerIcon = L.divIcon({
+      className: 'matcha-marker-leaflet',
+      html:
+        '<div class="matcha-marker-hit" role="presentation">' +
+        '<span class="matcha-marker-visual" aria-hidden="true"></span>' +
+        '</div>',
+      iconSize: [44, 44],
+      iconAnchor: [22, 22],
+    });
+
     places.forEach(function (place) {
-      const marker = L.marker([place.lat, place.lng]).addTo(map);
+      const marker = L.marker([place.lat, place.lng], { icon: markerIcon }).addTo(map);
       marker.on('click', function (ev) {
         if (typeof L !== 'undefined' && L.DomEvent && ev) {
           L.DomEvent.stopPropagation(ev);
