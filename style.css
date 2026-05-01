@@ -278,14 +278,22 @@ body {
   color: #A08C6E;
 }
 
-.map #map {
+.map .map-wrap {
+  position: relative;
   max-width: 1100px;
   width: 100%;
-  height: 600px;
   margin: 36px auto 0;
+}
+
+.map .map-wrap #map {
+  width: 100%;
+  height: 600px;
+  margin: 0;
   border-radius: 8px;
   box-shadow: 0 8px 30px rgba(92, 74, 50, 0.15);
   border: 2px solid #A08C6E;
+  box-sizing: border-box;
+  z-index: 0;
 }
 
 /* ════════════════════════════════════════
@@ -326,13 +334,13 @@ body {
   line-height: 1.1;
 }
 
-.map-wrap {
+.map-page .map-wrap {
   flex: 1;
   min-height: 420px;
   position: relative;
 }
 
-.map-wrap #map {
+.map-page .map-wrap #map {
   width: 100%;
   height: min(72vh, 720px);
   min-height: 400px;
@@ -480,6 +488,24 @@ body {
   margin-bottom: 0;
 }
 
+.map-full-link {
+  margin: 24px auto 0;
+  text-align: center;
+}
+
+.map-full-link a {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16px;
+  color: #A08C6E;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+
+.map-full-link a:hover {
+  color: #5C4A32;
+}
+
 /* Bottom-sheet drag handle (visible on narrow screens) */
 .matcha-detail-card__handle {
   display: none;
@@ -510,23 +536,28 @@ body {
 }
 
 @media (max-width: 767px) {
-  .map-page-header {
+  .map-page .map-page-header {
     padding: 60px 16px 40px;
   }
 
   /* Match wrap height to #map so the sheet pins to the map bottom, not empty flex space */
-  .map-wrap {
+  .map-page .map-wrap {
     flex: 0 0 auto;
     min-height: 0;
     height: max(70vh, 400px);
   }
 
-  #map {
+  .map-page .map-wrap #map {
     height: 70vh;
     min-height: 400px;
     border-radius: 4px;
     border-width: 1px;
     overflow: hidden;
+  }
+
+  .map .map-wrap #map {
+    height: min(360px, 55vh);
+    min-height: 280px;
   }
 
   .matcha-detail-card {

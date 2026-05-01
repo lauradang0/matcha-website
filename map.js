@@ -8,7 +8,7 @@
   const starsEl = document.getElementById('matcha-detail-stars');
   const noteEl = document.getElementById('matcha-detail-note');
   const signatureEl = document.getElementById('matcha-detail-signature');
-  const closeBtn = card.querySelector('.matcha-detail-card__close');
+  const closeBtn = card ? card.querySelector('.matcha-detail-card__close') : null;
 
   let closingTimer = null;
 
@@ -35,6 +35,7 @@
   }
 
   function populateCard(place) {
+    if (!eyebrowEl || !nameEl || !starsEl || !noteEl || !signatureEl) return;
     eyebrowEl.textContent = `${place.city}, ${place.country}`;
     nameEl.textContent = place.name;
     starsEl.innerHTML = renderStars(place.rating);
@@ -50,6 +51,7 @@
   }
 
   function openCard(place) {
+    if (!card) return;
     if (closingTimer) {
       clearTimeout(closingTimer);
       closingTimer = null;
@@ -65,6 +67,7 @@
   }
 
   function closeCard() {
+    if (!card) return;
     card.classList.remove('matcha-detail-card--open');
     card.setAttribute('aria-hidden', 'true');
     closingTimer = setTimeout(function () {
@@ -81,14 +84,18 @@
 
   document.addEventListener('matcha:select', onMatchaSelect);
 
-  closeBtn.addEventListener('click', function (e) {
-    e.stopPropagation();
-    closeCard();
-  });
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      closeCard();
+    });
+  }
 
-  card.addEventListener('click', function (e) {
-    e.stopPropagation();
-  });
+  if (card) {
+    card.addEventListener('click', function (e) {
+      e.stopPropagation();
+    });
+  }
 
   function initMap() {
     const el = document.getElementById('map');
