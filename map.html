@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matcha map — Laura's Matcha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&family=Inter:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="map-page">
+
+  <header class="map-page-header">
+    <a href="index.html" class="map-page-back">← Laura's Matcha</a>
+    <h1 class="map-page-title">Favorite spots</h1>
+  </header>
+
+  <div class="map-wrap" style="position:relative">
+    <div id="map" role="application" aria-label="Map of matcha places"></div>
+
+    <aside
+      class="matcha-detail-card"
+      id="matcha-detail-card"
+      aria-hidden="true"
+      hidden
+    >
+      <button type="button" class="matcha-detail-card__close" aria-label="Close detail">×</button>
+      <p class="matcha-detail-card__eyebrow" id="matcha-detail-eyebrow"></p>
+      <h2 class="matcha-detail-card__name" id="matcha-detail-name"></h2>
+      <div class="matcha-detail-card__divider" aria-hidden="true"></div>
+      <div class="matcha-detail-card__stars" id="matcha-detail-stars"></div>
+      <p class="matcha-detail-card__note" id="matcha-detail-note"></p>
+      <p class="matcha-detail-card__signature" id="matcha-detail-signature" hidden></p>
+    </aside>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="matchas.js"></script>
+  <script src="map.js"></script>
+</body>
+</html>
