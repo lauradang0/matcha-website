@@ -338,6 +338,8 @@ body {
   min-height: 400px;
   z-index: 0;
   border-radius: 0;
+  border: 2px solid #A08C6E;
+  box-sizing: border-box;
 }
 
 .matcha-detail-card {
@@ -476,4 +478,92 @@ body {
   color: #A08C6E;
   margin-top: 12px;
   margin-bottom: 0;
+}
+
+/* Bottom-sheet drag handle (visible on narrow screens) */
+.matcha-detail-card__handle {
+  display: none;
+}
+
+/* Leaflet: 44×44px touch target, small centered dot */
+.matcha-marker-leaflet {
+  background: transparent !important;
+  border: none !important;
+}
+
+.matcha-marker-hit {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.matcha-marker-visual {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #5C4A32;
+  border: 2px solid #FAF5E6;
+  box-shadow: 0 1px 5px rgba(92, 74, 50, 0.35);
+}
+
+@media (max-width: 767px) {
+  .map-page-header {
+    padding: 60px 16px 40px;
+  }
+
+  /* Match wrap height to #map so the sheet pins to the map bottom, not empty flex space */
+  .map-wrap {
+    flex: 0 0 auto;
+    min-height: 0;
+    height: max(70vh, 400px);
+  }
+
+  #map {
+    height: 70vh;
+    min-height: 400px;
+    border-radius: 4px;
+    border-width: 1px;
+    overflow: hidden;
+  }
+
+  .matcha-detail-card {
+    display: block;
+    left: 16px;
+    right: 16px;
+    bottom: 0;
+    width: auto;
+    max-width: none;
+    transform: translateY(calc(100% + 12px));
+    padding: 12px 20px 20px;
+    padding-top: 10px;
+    border-radius: 10px 10px 0 0;
+    border-bottom: none;
+    box-shadow: 0 -4px 24px rgba(92, 74, 50, 0.2), 0 -1px 8px rgba(92, 74, 50, 0.1);
+  }
+
+  .matcha-detail-card--open {
+    transform: translateY(0);
+  }
+
+  .matcha-detail-card__handle {
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto 10px;
+    border-radius: 999px;
+    background: #A08C6E;
+    flex-shrink: 0;
+  }
+
+  .matcha-detail-card__close {
+    top: 14px;
+    right: 8px;
+    min-width: 44px;
+    min-height: 44px;
+    width: 44px;
+    height: 44px;
+  }
 }
