@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-  const places = window.MATCHA_PLACES || [];
   const card = document.getElementById('matcha-detail-card');
   const eyebrowEl = document.getElementById('matcha-detail-eyebrow');
   const taglineEl = document.getElementById('matcha-detail-tagline');
@@ -13,43 +12,42 @@
 
   let closingTimer = null;
 
-  /** Cute matcha icons (32×32) for bubble markers */
-  const BUBBLE_ICONS = {
-    whisk:
-      '<svg class="matcha-bubble-icon" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">' +
-      '<path fill="#c4a574" d="M11 5h10v4H11z"/>' +
-      '<rect x="13" y="9" width="6" height="11" rx="1" fill="#e8c088"/>' +
-      '<path fill="#f5e6d3" d="M8 14h16v2H8zm0 4h16v2H8zm0 4h14v2H8z"/>' +
-      '<ellipse cx="16" cy="29" rx="5" ry="2" fill="#a08c6e"/>' +
-      '</svg>',
-    bowl:
-      '<svg class="matcha-bubble-icon" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">' +
-      '<path fill="#faf5e6" stroke="#a08c6e" stroke-width="1.2" d="M5 15c0 7.5 4.5 11.5 11 11.5S27 22.5 27 15"/>' +
-      '<ellipse cx="16" cy="15" rx="11" ry="4" fill="#7cb868"/>' +
-      '</svg>',
-    latte:
-      '<svg class="matcha-bubble-icon" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">' +
-      '<rect x="7" y="7" width="16" height="20" rx="2" fill="#faf5e6" stroke="#a08c6e" stroke-width="1.2"/>' +
-      '<rect x="9" y="10" width="12" height="7" rx="1" fill="#c8e6b8"/>' +
-      '<path fill="none" stroke="#f0ebe3" stroke-width="1.3" d="M11 11c2.2-1.8 6.8-1.8 9 0"/>' +
-      '</svg>',
-    tin:
-      '<svg class="matcha-bubble-icon" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">' +
-      '<rect x="10" y="10" width="12" height="16" rx="1.5" fill="#6b9e52" stroke="#4a6b38" stroke-width="1"/>' +
-      '<rect x="11" y="7" width="10" height="5" rx="1" fill="#d4bc7a" stroke="#a08c6e" stroke-width="0.8"/></svg>',
-    softserve:
-      '<svg class="matcha-bubble-icon" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">' +
-      '<path fill="#e8c4a0" stroke="#c4a082" stroke-width="1" d="M11 26 L16 14 L21 26 z"/>' +
-      '<path fill="#a8d89a" d="M13 16 Q16 8 19 16 Q16 20 13 16"/>' +
-      '<path fill="#8bc97a" d="M14 14 Q16 10 18 14"/></svg>',
+  /** Three rotating matcha illustrations (PNG in assets/). */
+  const PIN_IMAGES = ['assets/map-pin-cup.png', 'assets/map-pin-latte.png', 'assets/map-pin-bowl.png'];
+
+  const PIN_ICON_IDS = ['pin-cup', 'pin-latte', 'pin-bowl'];
+
+  const LEGACY_PIN_INDEX = {
+    'pin-cup': 0,
+    'pin-latte': 1,
+    'pin-bowl': 2,
+    cup: 0,
+    latte: 1,
+    bowl: 2,
+    whisk: 2,
+    tin: 0,
+    softserve: 1,
+    strawberry: 1,
+    'y2k-heart': 0,
+    'y2k-camera': 1,
+    'y2k-bow': 2,
+    'y2k-denim': 0,
+    'y2k-button': 1,
+    'y2k-sparkle': 1,
+    'y2k-cd': 1,
+    'y2k-eye': 2,
   };
 
-  const ICON_KEYS = Object.keys(BUBBLE_ICONS);
-
-  function placeIconKey(place, index) {
-    const k = place.icon;
-    if (k && BUBBLE_ICONS[k]) return k;
-    return ICON_KEYS[index % ICON_KEYS.length];
+  function pinImageIndex(place, index) {
+    if (place.icon) {
+      const id = String(place.icon).trim();
+      const fromList = PIN_ICON_IDS.indexOf(id);
+      if (fromList >= 0) return fromList;
+      if (Object.prototype.hasOwnProperty.call(LEGACY_PIN_INDEX, id)) {
+        return LEGACY_PIN_INDEX[id];
+      }
+    }
+    return index % 3;
   }
 
   function escapeHtml(s) {
@@ -67,14 +65,16 @@
   }
 
   function bubbleMarkerHtml(place, index) {
-    const iconKey = placeIconKey(place, index);
-    const svg = BUBBLE_ICONS[iconKey];
+    const imgIdx = pinImageIndex(place, index);
+    const src = PIN_IMAGES[imgIdx];
     const name = escapeHtml(place.name || 'Matcha');
     const line = escapeHtml(defaultTagline(place));
     return (
       '<div class="matcha-map-pin" tabindex="0" role="button">' +
-      '<div class="matcha-map-pin__bubble">' +
-      svg +
+      '<div class="matcha-map-pin__bubble matcha-map-pin__bubble--illu">' +
+      '<img class="map-pin-illu" src="' +
+      escapeHtml(src) +
+      '" width="48" height="48" alt="" draggable="false" />' +
       '</div>' +
       '<div class="matcha-map-pin__labels">' +
       '<span class="matcha-map-pin__name">' +
@@ -175,6 +175,10 @@
     });
   }
 
+  function getPlaces() {
+    return window.getMergedMatchaPlaces ? window.getMergedMatchaPlaces() : window.MATCHA_PLACES || [];
+  }
+
   function initMap() {
     const el = document.getElementById('map');
     if (!el || typeof L === 'undefined') return;
@@ -192,21 +196,9 @@
       maxZoom: 20,
     }).addTo(map);
 
-    const latLngs = places.map(function (p) {
-      return [p.lat, p.lng];
-    });
+    const markersLayer = L.layerGroup().addTo(map);
 
-    places.forEach(function (place, index) {
-      const html = bubbleMarkerHtml(place, index);
-      const icon = L.divIcon({
-        className: 'matcha-marker-leaflet',
-        html: html,
-        iconSize: [268, 76],
-        iconAnchor: [30, 70],
-        popupAnchor: [0, -52],
-      });
-      const marker = L.marker([place.lat, place.lng], { icon: icon }).addTo(map);
-
+    function bindMarker(marker, place) {
       function activate(ev) {
         if (typeof L !== 'undefined' && L.DomEvent && ev) {
           const domEv = ev.originalEvent != null ? ev.originalEvent : ev;
@@ -230,13 +222,40 @@
           }
         });
       }, 0);
-    });
-
-    if (latLngs.length) {
-      map.fitBounds(latLngs, { padding: [56, 56], maxZoom: 12 });
-    } else {
-      map.setView([20, 0], 2);
     }
+
+    function addMarkersFromPlaces(placesList) {
+      markersLayer.clearLayers();
+      const latLngs = [];
+      placesList.forEach(function (place, index) {
+        if (place.lat == null || place.lng == null || isNaN(Number(place.lat)) || isNaN(Number(place.lng))) {
+          return;
+        }
+        const html = bubbleMarkerHtml(place, index);
+        const icon = L.divIcon({
+          className: 'matcha-marker-leaflet',
+          html: html,
+          iconSize: [268, 76],
+          iconAnchor: [30, 70],
+          popupAnchor: [0, -52],
+        });
+        const marker = L.marker([Number(place.lat), Number(place.lng)], { icon: icon }).addTo(markersLayer);
+        bindMarker(marker, place);
+        latLngs.push([Number(place.lat), Number(place.lng)]);
+      });
+
+      if (latLngs.length) {
+        map.fitBounds(latLngs, { padding: [56, 56], maxZoom: 12 });
+      } else {
+        map.setView([20, 0], 2);
+      }
+    }
+
+    addMarkersFromPlaces(getPlaces());
+
+    window.reloadMatchaMapMarkers = function () {
+      addMarkersFromPlaces(getPlaces());
+    };
 
     map.on('click', function () {
       closeCard();

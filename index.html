@@ -23,7 +23,7 @@
       </div>
       <div class="subtitle-row">
         <span>MATCHA</span>
-        <span>2024</span>
+        <span>2026</span>
         <span class="subtitle-jp">抹茶レビュー</span>
       </div>
     </div>
@@ -56,6 +56,7 @@
       <p class="map-eyebrow">from kyoto to brooklyn</p>
       <h2 class="map-title">Places I've Sipped</h2>
       <p class="map-sub">every cafe that earned a spot on the list</p>
+      <button type="button" class="add-entry-btn add-entry-btn--embed" data-open-add-cafe>+ Add cafe</button>
     </div>
     <div class="map-wrap">
       <div id="map" role="application" aria-label="Map of matcha places"></div>
@@ -79,9 +80,44 @@
     <p class="map-full-link"><a href="map.html">open full map ↗</a></p>
   </section>
 
+  <div id="add-cafe-modal" class="form-modal" hidden role="dialog" aria-modal="true" aria-labelledby="add-cafe-title-index">
+    <div class="form-modal__backdrop" aria-hidden="true" data-close-add-cafe></div>
+    <div class="form-modal__panel form-modal__panel--wide">
+      <button type="button" class="form-modal__close" data-close-add-cafe aria-label="Close">×</button>
+      <h2 id="add-cafe-title-index" class="form-modal__title">Add a cafe</h2>
+      <p class="form-modal__hint">Saved on this browser only — paste latitude &amp; longitude from Google Maps.</p>
+      <form id="add-cafe-form">
+        <label class="form-field"><span class="form-field__label">Cafe name</span><input name="cafe_name" type="text" required autocomplete="off" /></label>
+        <div class="form-row">
+          <label class="form-field"><span class="form-field__label">City</span><input name="cafe_city" type="text" required autocomplete="address-level2" /></label>
+          <label class="form-field"><span class="form-field__label">Country</span><input name="cafe_country" type="text" placeholder="Japan" autocomplete="country-name" /></label>
+        </div>
+        <div class="form-row">
+          <label class="form-field"><span class="form-field__label">Latitude</span><input name="cafe_lat" type="text" inputmode="decimal" required placeholder="35.0116" /></label>
+          <label class="form-field"><span class="form-field__label">Longitude</span><input name="cafe_lng" type="text" inputmode="decimal" required placeholder="135.7681" /></label>
+        </div>
+        <label class="form-field"><span class="form-field__label">Rating (0–5)</span><input name="cafe_rating" type="number" min="0" max="5" step="0.5" value="4.5" /></label>
+        <label class="form-field"><span class="form-field__label">Map tagline</span><input name="cafe_tagline" type="text" placeholder="e.g. best ceremonial latte" autocomplete="off" /></label>
+        <label class="form-field"><span class="form-field__label">Pin art</span>
+          <select name="cafe_icon">
+            <option value="">Rotate (cup → latte → bowl)</option>
+            <option value="pin-cup">Matcha cup</option>
+            <option value="pin-latte">Iced matcha latte</option>
+            <option value="pin-bowl">Bowl &amp; whisk</option>
+          </select>
+        </label>
+        <label class="form-field"><span class="form-field__label">Your note</span><textarea name="cafe_note" rows="3" placeholder="What did you love?"></textarea></label>
+        <label class="form-field"><span class="form-field__label">Signature drink (optional)</span><input name="cafe_signature" type="text" autocomplete="off" /></label>
+        <button type="submit" class="form-modal__submit">Save cafe</button>
+      </form>
+    </div>
+  </div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="matchas.js"></script>
+  <script src="user-matcha.js"></script>
   <script src="map.js"></script>
+  <script src="add-cafe.js"></script>
   <script src="bubbles.js"></script>
 </body>
 </html>

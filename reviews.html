@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matcha collection — Laura's Matcha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=BIZ+UDGothic:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@400;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="collection-page">
+
+  <header class="collection-page-header">
+    <a href="index.html" class="collection-page-back">← Laura's Matcha</a>
+    <p class="collection-page-eyebrow">the tin archive</p>
+    <h1 class="collection-page-title">Matcha collection</h1>
+    <p class="collection-page-lede">Tap a tin to see how many stars it gets in my kitchen.</p>
+    <button type="button" class="add-entry-btn add-entry-btn--header" data-open-add-tin>+ Add tin rating</button>
+  </header>
+
+  <main class="collection-page-main">
+    <div class="tin-grid" id="tin-grid" aria-label="Matcha tins"></div>
+  </main>
+
+  <div
+    class="tin-modal"
+    id="tin-modal"
+    hidden
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="tin-modal-name"
+  >
+    <div class="tin-modal__backdrop" id="tin-modal-backdrop" aria-hidden="true"></div>
+    <div class="tin-modal__panel">
+      <button type="button" class="tin-modal__close" id="tin-modal-close" aria-label="Close detail">×</button>
+      <p class="tin-modal__producer" id="tin-modal-producer"></p>
+      <h2 class="tin-modal__name" id="tin-modal-name"></h2>
+      <div class="tin-modal__rating-row">
+        <span class="tin-modal__label">my rating</span>
+        <div class="tin-modal__stars" id="tin-modal-stars" aria-live="polite"></div>
+        <span class="tin-modal__score" id="tin-modal-score"></span>
+      </div>
+      <p class="tin-modal__note" id="tin-modal-note"></p>
+    </div>
+  </div>
+
+  <div id="add-tin-modal" class="form-modal" hidden role="dialog" aria-modal="true" aria-labelledby="add-tin-title">
+    <div class="form-modal__backdrop" aria-hidden="true" data-close-add-tin></div>
+    <div class="form-modal__panel form-modal__panel--wide">
+      <button type="button" class="form-modal__close" data-close-add-tin aria-label="Close">×</button>
+      <h2 id="add-tin-title" class="form-modal__title">Add a tin rating</h2>
+      <p class="form-modal__hint">Saved on this browser only.</p>
+      <form id="add-tin-form">
+        <label class="form-field"><span class="form-field__label">Tin / product name</span><input name="tin_name" type="text" required autocomplete="off" /></label>
+        <label class="form-field"><span class="form-field__label">Producer or brand</span><input name="tin_producer" type="text" placeholder="e.g. Ippodo" autocomplete="off" /></label>
+        <label class="form-field"><span class="form-field__label">Rating (0–5)</span><input name="tin_rating" type="number" min="0" max="5" step="0.5" value="4.5" /></label>
+        <div class="form-row">
+          <label class="form-field"><span class="form-field__label">Tin body</span><input name="tin_color" type="color" value="#5a8f4a" /></label>
+          <label class="form-field"><span class="form-field__label">Lid</span><input name="tin_lid" type="color" value="#d4bc7a" /></label>
+        </div>
+        <label class="form-field"><span class="form-field__label">Your note</span><textarea name="tin_note" rows="3" placeholder="Tasting notes..."></textarea></label>
+        <button type="submit" class="form-modal__submit">Save tin</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="matcha-tins.js"></script>
+  <script src="user-matcha.js"></script>
+  <script src="reviews.js"></script>
+</body>
+</html>
