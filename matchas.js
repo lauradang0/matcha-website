@@ -1,6 +1,8 @@
 /**
  * Favorite matcha spots for the map. Edit freely.
  * Loaded as a classic script so window.MATCHA_PLACES is available globally.
+ * - tagline: short italic vibe for map pins (Gen-Z map labels)
+ * - icon: whisk | bowl | latte | tin | softserve (cute bubble icon)
  */
 window.MATCHA_PLACES = [
   {
@@ -11,6 +13,8 @@ window.MATCHA_PLACES = [
     lat: 35.0116,
     lng: 135.7681,
     rating: 4.9,
+    tagline: "quiet ceremony & the best usucha",
+    icon: "bowl",
     note: "Centuries of ritual seem to steep in every bowl, as though the city’s quiet dignity had been whisked into green foam.",
     signatureDrink: "Usucha",
   },
@@ -22,6 +26,8 @@ window.MATCHA_PLACES = [
     lat: 34.8917,
     lng: 135.8067,
     rating: 4.8,
+    tagline: "stone-milled uji, zero notes app",
+    icon: "tin",
     note: "Stone-ground Uji whispers through the fog of the cup—a small pilgrimage that repays every train stop.",
   },
   {
@@ -32,6 +38,8 @@ window.MATCHA_PLACES = [
     lat: 34.8907,
     lng: 135.8073,
     rating: 4.7,
+    tagline: "parfait goals + hojicha side quest",
+    icon: "softserve",
     note: "Parfait layers and the echo of hojicha frame matcha that tastes like river light held still at noon.",
   },
   {
@@ -42,6 +50,8 @@ window.MATCHA_PLACES = [
     lat: 40.7223,
     lng: -73.9943,
     rating: 4.4,
+    tagline: "downtown matcha latte core",
+    icon: "latte",
     note: "Downtown hum falls away behind a cloud of vivid green that insists the afternoon is still generous.",
     signatureDrink: "Matcha latte",
   },
@@ -53,6 +63,8 @@ window.MATCHA_PLACES = [
     lat: 40.7287,
     lng: -74.0021,
     rating: 4.6,
+    tagline: "west village soft-girl sip",
+    icon: "latte",
     note: "West Village calm meets ceremony in a cup that wears its brightness without apology or haste.",
   },
   {
@@ -63,6 +75,8 @@ window.MATCHA_PLACES = [
     lat: 51.4944,
     lng: -0.1745,
     rating: 4.5,
+    tagline: "matcha soft serve era",
+    icon: "softserve",
     note: "South Kensington holds this pocket of Kyoto-soft sweetness where the Thames might as well be the Kamo.",
     signatureDrink: "Matcha soft serve",
   },
