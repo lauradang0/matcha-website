@@ -50,14 +50,6 @@
     return index % 3;
   }
 
-  function escapeHtml(s) {
-    return String(s)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
   function defaultTagline(place) {
     if (place.tagline) return place.tagline;
     if (place.signatureDrink) return 'famous for ' + place.signatureDrink;
@@ -67,13 +59,13 @@
   function bubbleMarkerHtml(place, index) {
     const imgIdx = pinImageIndex(place, index);
     const src = PIN_IMAGES[imgIdx];
-    const name = escapeHtml(place.name || 'Matcha');
-    const line = escapeHtml(defaultTagline(place));
+    const name = window.escapeMatchaHtml(place.name || 'Matcha');
+    const line = window.escapeMatchaHtml(defaultTagline(place));
     return (
       '<div class="matcha-map-pin" tabindex="0" role="button">' +
       '<div class="matcha-map-pin__bubble matcha-map-pin__bubble--illu">' +
       '<img class="map-pin-illu" src="' +
-      escapeHtml(src) +
+      window.escapeMatchaHtml(src) +
       '" width="48" height="48" alt="" draggable="false" />' +
       '</div>' +
       '<div class="matcha-map-pin__labels">' +
@@ -88,36 +80,13 @@
     );
   }
 
-  function renderStars(rating) {
-    const r = typeof rating === 'number' && !Number.isNaN(rating) ? rating : 0;
-    const parts = [];
-    for (let i = 0; i < 5; i++) {
-      const fullTh = i + 1;
-      const halfTh = i + 0.5;
-      if (r >= fullTh) {
-        parts.push('<span class="matcha-star matcha-star--full">★</span>');
-      } else if (r >= halfTh) {
-        parts.push(
-          '<span class="matcha-star matcha-star--half" aria-hidden="true">' +
-            '<span class="matcha-star__empty">☆</span>' +
-            '<span class="matcha-star__half-layer"><span class="matcha-star__half">★</span></span>' +
-            '</span>'
-        );
-      } else {
-        parts.push('<span class="matcha-star matcha-star--empty">☆</span>');
-      }
-    }
-    return parts.join('');
-  }
-
   function populateCard(place) {
     if (!nameEl || !starsEl || !noteEl || !signatureEl) return;
     const loc = [place.city, place.country].filter(Boolean).join(' · ');
     if (eyebrowEl) eyebrowEl.textContent = loc;
     nameEl.textContent = place.name || '';
     if (taglineEl) taglineEl.textContent = defaultTagline(place);
-    starsEl.innerHTML = renderStars(place.rating);
-    starsEl.setAttribute('aria-label', `Rating ${place.rating} out of 5`);
+    window.setMatchaStarsOnElement(starsEl, place.rating);
     noteEl.textContent = place.note || '';
     if (place.signatureDrink) {
       signatureEl.hidden = false;

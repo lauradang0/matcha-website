@@ -23,28 +23,6 @@
     return window.getMergedMatchaTins ? window.getMergedMatchaTins() : window.MATCHA_TINS || [];
   }
 
-  function renderStars(rating) {
-    const r = typeof rating === 'number' && !Number.isNaN(rating) ? rating : 0;
-    const parts = [];
-    for (let i = 0; i < 5; i++) {
-      const fullTh = i + 1;
-      const halfTh = i + 0.5;
-      if (r >= fullTh) {
-        parts.push('<span class="matcha-star matcha-star--full">★</span>');
-      } else if (r >= halfTh) {
-        parts.push(
-          '<span class="matcha-star matcha-star--half" aria-hidden="true">' +
-            '<span class="matcha-star__empty">☆</span>' +
-            '<span class="matcha-star__half-layer"><span class="matcha-star__half">★</span></span>' +
-            '</span>'
-        );
-      } else {
-        parts.push('<span class="matcha-star matcha-star--empty">☆</span>');
-      }
-    }
-    return parts.join('');
-  }
-
   function tinThumbHtml() {
     return (
       '<img class="tin-card__img" src="assets/collection-thumb-chawan.png" width="100" height="130" alt="" draggable="false" />'
@@ -55,8 +33,7 @@
     if (!producerEl || !nameEl || !starsEl || !scoreEl || !noteEl || !closeBtn) return;
     producerEl.textContent = tin.producer || '';
     nameEl.textContent = tin.name || '';
-    starsEl.innerHTML = renderStars(tin.rating);
-    starsEl.setAttribute('aria-label', `Rating ${tin.rating} out of 5`);
+    window.setMatchaStarsOnElement(starsEl, tin.rating);
     scoreEl.textContent = Number(tin.rating).toFixed(1) + ' / 5';
     noteEl.textContent = tin.note || '';
     modal.hidden = false;
